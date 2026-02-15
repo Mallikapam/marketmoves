@@ -30,6 +30,19 @@ body {
   min-height: 100vh;
 }
 
+/* Hide scrollbars globally but keep scrolling functional */
+* {
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE and Edge */
+  -ms-overflow-style: none;
+}
+
+/* Chrome, Safari, and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

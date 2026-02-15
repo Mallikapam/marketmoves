@@ -1,10 +1,11 @@
 from fastapi import Depends, FastAPI, HTTPException
-import auth_routes, routes, trade_routes, market_routes, user_routes
+import auth_routes, routes, trade_routes
+import market_routes, user_routes
 from models import User
 from fastapi.security import HTTPBearer
 from db import init_db
 
-# from firebase_auth import verify_token
+from firebase_auth import verify_token
 
 init_db()
 app = FastAPI()

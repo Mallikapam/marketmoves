@@ -1,0 +1,247 @@
+/* Global */
+html, body, #root { height:100%; }
+body {
+  margin:0; font-family:Arial, sans-serif; background:#fff;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+*, *::before, *::after { box-sizing:border-box; }
+
+/* --- Centering shell (kills right gap) --- */
+.shell {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 20px 32px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 68px); /* space under navbar */
+}
+
+/* Search */
+.trade-search-bar{
+  margin:8px auto 0px; width: 360px; height: 40px;
+  margin-bottom: 20px;
+  display:flex; align-items:center; gap:8px;
+  padding:0 12px; border:1px solid #e5e7eb; border-radius:12px; background:#f7f7f7;
+}
+.trade-search-bar input{ flex:1; border:0; outline:0; background:transparent; color:#111; }
+.search-icon{ color:#777; }
+
+/* Two columns */
+.trade-columns{
+  display:flex; gap:28px; align-items:flex-start;
+  min-height:0; /* enable child flex scrolling */
+}
+
+/* Left column (fixed width) */
+.stocks-list{
+  flex:0 0 332px; background:#fafafa; border-radius:16px;
+  box-shadow:0 1px 5px rgba(0,0,0,.05);
+  display:flex; flex-direction:column;
+  height: calc(100vh - 190px); min-height:0; overflow:hidden;
+}
+.stocks-list h3{ margin:14px 18px 8px; font-size:.92rem; color:#111; }
+
+/* Scroll only the list (not the form) */
+.stocks-scroll{
+  flex:1; min-height:0; overflow-y:auto; padding:0 18px 12px;
+}
+/*hiding scroll for all pages so it doesn't make the spacing look weird */
+.stocks-scroll::-webkit-scrollbar{ display: none; }
+.stocks-scroll{ scrollbar-width: none; -ms-overflow-style: none; }
+
+/* Stock cards */
+.stock-card{
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; padding:11px 12px; margin:8px 0;
+  background:#fff; border:1px solid #e5e7eb; border-radius:10px; cursor:pointer;
+  transition:.15s background;
+}
+.stock-card:hover{ background:#f6f7ff; }
+.stock-card.active{ background:#eef1ff; border-color:#6366f1; }
+.stock-card strong{ color:#111; font-weight:600; font-size:.92rem; }
+.stock-card p{ color:#444; font-size:.76rem; margin:2px 0 0; }
+.stock-info{ text-align:right; }
+.stock-info span{ color:#111; font-weight:600; }
+.stock-info small{ font-size:.75rem; }
+
+/* Fixed buy/sell form */
+.trade-form{
+  border-top:1px solid #e5e7eb; background:#fff;
+  padding:16px 18px; border-radius:16px 16px 0 0;
+}
+.trade-form h4{ margin:0 0 6px; font-size:.95rem; color:#111; }
+.trade-form label{ display:block; margin-top:8px; font-size:.82rem; color:#333; }
+.trade-form input{
+  width:100%; height:2.25rem; margin-top:4px; padding:0 10px;
+  border:1px solid #ccc; border-radius:8px; font-size:.86rem; color:#111; background:#fff;
+}
+.price-row{ display:flex; justify-content:space-between; margin-top:8px; font-size:.82rem; color:#222; }
+.toggle-buttons{ display:flex; gap:8px; margin-top:12px; }
+.toggle-buttons button{
+  flex:1; height:2.25rem; border-radius:8px; border:1px solid #ccc;
+  background:#f8f8f8; font-weight:600; cursor:pointer; color:#111;
+}
+.active-buy{ background:#10b981; color:#fff; border:none; }
+.active-sell{ background:#ef4444; color:#fff; border:none; }
+.submit-btn{
+  width:100%; height:2.5rem; margin-top:12px; border:0; border-radius:8px;
+  font-weight:700; color:#fff; cursor:pointer;
+}
+.submit-btn.green{ background:#10b981; }
+.submit-btn.red{ background:#ef4444; }
+.trade-form small{ display:block; text-align:center; margin-top:6px; color:#777; font-size:.7rem; }
+
+/* Right column */
+.chart-area{
+  flex:1; min-width:0; min-height:0;
+  height: calc(100vh - 190px);
+  background:#fafafa; border-radius:16px; padding:20px 24px;
+  box-shadow:0 1px 5px rgba(0,0,0,.05); display:flex; flex-direction:column;
+}
+
+/* Stock preview + bell */
+.stock-preview{
+  display:grid; grid-template-columns:1fr auto auto auto; align-items:center;
+  gap:16px; background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:12px 14px; margin-bottom:18px;
+}
+.stock-symbol{ display:flex; align-items:center; gap:10px; }
+.logo-placeholder{
+  width:36px; height:36px; border-radius:50%; background:#ddd; color:#444; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.stock-price strong{ color:#111; font-size:1rem; }
+.stock-price p{ margin-top:2px; font-size:.8rem; }
+.positive{ color:#10b981; } .neutral{ color:#6366f1; }
+.bell-btn{
+  border:1px solid #e5e7eb; background:#fff; border-radius:8px; width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center; color:#666; cursor:pointer;
+}
+.bell-btn:hover{ background:#f5f6ff; }
+
+/* Chart block */
+.chart-placeholder{
+  flex:1; min-height:0; border:2px dashed #ddd; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; color:#999; font-size:.9rem;
+}
+
+/* Timeframe + summary */
+.chart-buttons{ display:flex; justify-content:center; gap:10px; margin:14px 0; }
+.chart-buttons button{
+  border:0; background:transparent; padding:5px 10px; border-radius:8px; color:#555; cursor:pointer;
+}
+.chart-buttons button.active{ background:#eef1ff; color:#333; font-weight:600; }
+.summary-buttons{ display:flex; justify-content:center; gap:12px; margin-top:auto; }
+.summary-buttons button{
+  border:1px solid #ddd; background:#fff; border-radius:10px; padding:6px 16px; font-weight:600; color:#555; cursor:pointer;
+}
+.summary-buttons .active{ background:#eef1ff; border-color:#6366f1; color:#000; }
+/* Navbar full-width wrapper */
+.navbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* fixes horizontal overflow */
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  z-index: 100;
+}
+
+
+/* Replace N with real Apple logo */
+.company-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+/* Replace bell icon */
+.bell-btn img {
+  width: 18px;
+  height: 18px;
+}
+/* ===== NAVBAR FIX ===== */
+.navbar-wrapper {
+  position: fixed;         /* make it full width */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04); /* subtle shadow for separation */
+  z-index: 100;
+  display: flex;
+  justify-content: center; /* Center the header */
+}
+
+/* Ensure header inside navbar-wrapper behaves the same as on other pages */
+.navbar-wrapper .header {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.shell {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 100px 20px 32px; /* extra top padding to clear fixed navbar */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 64px);
+}
+
+/* ===== APPLE ICON FIX ===== */
+.company-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  object-fit: contain;
+  overflow: visible;
+}
+
+/* ===== TEXT COLOR FIX ===== */
+.stock-symbol strong,
+.stock-symbol p {
+  color: #000 !important;
+}
+
+/* ===== ESTIMATED TOTAL ALIGNMENT ===== */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; /* ensures price aligns horizontally */
+  font-size: 0.82rem;
+  margin-top: 8px;
+  color: #222;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* removes any page scroll */
+  background-color: #ffffff; /* ensures background stays white */
+}
+
+/* Make wrapper fill viewport */
+.trade-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff; /* same white as cards */
+}
+
+/* The shell (main content area) */
+.shell {
+  flex: 1; /* take all available height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 70px 20px 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
