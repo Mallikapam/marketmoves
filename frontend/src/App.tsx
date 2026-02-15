@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import logo from './assets/logo.png'
-
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import TestSupabase from './TestSupabase'
 import './App.css'
 
 // for routing

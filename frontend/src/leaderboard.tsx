@@ -1,6 +1,6 @@
 import "./leaderboard.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TestSupabase from "./TestSupabase";
 import NavBar from "./navBar";
 import "./App.css";
@@ -15,26 +15,26 @@ function App() {
   // How to organize this data? - How will we fetch it from the backend?
   // make a list of 5 names and their associated data
 
+  type LeaderboardEntry = {
+    name: string;
+    university: string;
+    number_of_trades: number;
+    points: number;
+    return_percentage: number;
+  };
+
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
+
+  useEffect(() => {
+    fetch("/leaderboard.json")
+      .then((res) => res.json())
+      .then((json) => setEntries(json.leaderboard))
+      .catch((err) => console.error("Error loading JSON:", err));
+  }, []);
+
   const firstName = "Name1";
-  const p1trades = 10;
-  const p1points = 3000;
-  const p1return = 100;
   const secondName = "Name2";
-  const p2trades = 20;
-  const p2points = 3000;
-  const p2return = 200;
   const thirdName = "Name3";
-  const p3trades = 34;
-  const p3points = 2000;
-  const p3return = 300;
-  const fourthName = "Name4";
-  const p4trades = 44;
-  const p4points = 1000;
-  const p4return = 400;
-  const fifthName = "Name5";
-  const p5trades = 54;
-  const p5points = 10;
-  const p5return = 500;
 
   const position = 23;
 
@@ -100,106 +100,27 @@ function App() {
             </div>
 
             <div className="trader-list">
-              {/* 1 out of 5 traders */}
-              <div className="trader-row">
-                <div className="trader-left">
-                  <div className="rank-badge">1</div>
-                  <div className="trader-info">
-                    <div className="trader-name">{firstName}</div>
-                    <div className="trader-trades">{p1trades} trades</div>
+              {entries.map((entry, index) => (
+                <div className="trader-row">
+                  <div className="trader-left">
+                    <div className="rank-badge">{index + 1}</div>
+                    <div className="trader-info">
+                      <div className="trader-name">{entry.name}</div>
+                      <div className="trader-trades">{entry.number_of_trades} trades</div>
+                    </div>
+                  </div>
+                  <div className="trader-right">
+                    <div className="trader-points">
+                      <div className="points-value">{entry.points}</div>
+                      <div className="points-label">points</div>
+                    </div>
+                    <div className="trader-return">
+                      <div className="return-percent">+{entry.return_percentage}%</div>
+                      <div className="return-label">return</div>
+                    </div>
                   </div>
                 </div>
-                <div className="trader-right">
-                  <div className="trader-points">
-                    <div className="points-value">{p1points}</div>
-                    <div className="points-label">points</div>
-                  </div>
-                  <div className="trader-return">
-                    <div className="return-percent">+{p1return}%</div>
-                    <div className="return-label">return</div>
-                  </div>
-                </div>
-              </div>
-              {/* 2 out of 5 traders */}
-              <div className="trader-row">
-                <div className="trader-left">
-                  <div className="rank-badge">2</div>
-                  <div className="trader-info">
-                    <div className="trader-name">{secondName}</div>
-                    <div className="trader-trades">{p2trades} trades</div>
-                  </div>
-                </div>
-                <div className="trader-right">
-                  <div className="trader-points">
-                    <div className="points-value">{p2points}</div>
-                    <div className="points-label">points</div>
-                  </div>
-                  <div className="trader-return">
-                    <div className="return-percent">+{p2return}%</div>
-                    <div className="return-label">return</div>
-                  </div>
-                </div>
-              </div>
-              {/* 3 out of 5 traders */}
-              <div className="trader-row">
-                <div className="trader-left">
-                  <div className="rank-badge">3</div>
-                  <div className="trader-info">
-                    <div className="trader-name">{thirdName}</div>
-                    <div className="trader-trades">{p3trades} trades</div>
-                  </div>
-                </div>
-                <div className="trader-right">
-                  <div className="trader-points">
-                    <div className="points-value">{p3points}</div>
-                    <div className="points-label">points</div>
-                  </div>
-                  <div className="trader-return">
-                    <div className="return-percent">+{p3return}%</div>
-                    <div className="return-label">return</div>
-                  </div>
-                </div>
-              </div>
-              {/* 4 out of 5 traders */}
-              <div className="trader-row">
-                <div className="trader-left">
-                  <div className="rank-badge">4</div>
-                  <div className="trader-info">
-                    <div className="trader-name">{fourthName}</div>
-                    <div className="trader-trades">{p4trades} trades</div>
-                  </div>
-                </div>
-                <div className="trader-right">
-                  <div className="trader-points">
-                    <div className="points-value">{p4points}</div>
-                    <div className="points-label">points</div>
-                  </div>
-                  <div className="trader-return">
-                    <div className="return-percent">+{p4return}%</div>
-                    <div className="return-label">return</div>
-                  </div>
-                </div>
-              </div>
-              {/* 5 out of 5 traders */}
-              <div className="trader-row">
-                <div className="trader-left">
-                  <div className="rank-badge">5</div>
-                  <div className="trader-info">
-                    <div className="trader-name">{fifthName}</div>
-                    <div className="trader-trades">{p5trades} trades</div>
-                  </div>
-                </div>
-                <div className="trader-right">
-                  <div className="trader-points">
-                    <div className="points-value">{p5points}</div>
-                    <div className="points-label">points</div>
-                  </div>
-                  <div className="trader-return">
-                    <div className="return-percent">+{p5return}%</div>
-                    <div className="return-label">return</div>
-                  </div>
-                </div>
-              </div>
+              ))}
 
               {/* your rank */}
               <div className="ellipsis">...</div>
