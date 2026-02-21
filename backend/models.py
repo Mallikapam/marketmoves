@@ -8,9 +8,7 @@ class User(BaseModel):
     first_name: str
     last_name: str
     password: str
-    balance: float = 10000.0        # default value 
-    api_key: str 
-    secret: str
+    balance: float = 10000.0        # default value
     school: Optional[str] = None
 
 
