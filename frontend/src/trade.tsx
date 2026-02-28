@@ -1,9 +1,21 @@
 import './trade.css'
 import NavBar from './navBar'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import bellIcon from './assets/bell.svg'
 import appleIcon from './assets/apple_icon.svg'
+
+interface TickerData {
+    symbol: string
+    price: number
+    changePct: number
+    open: number
+    high: number
+    low: number
+    prevClose: number
+    volume: number
+    asOf: string
+}
 
 function Trade() {
     const [quantity, setQuantity] = useState(1)
@@ -12,6 +24,42 @@ function Trade() {
     const [action, setAction] = useState<'buy' | 'sell'>('buy')
     const [timeframe, setTimeframe] = useState('1M')
     const [detailView, setDetailView] = useState<'summary' | 'details'>('details')
+    const [tickerData, setTickerData] = useState<TickerData | null>(null)
+    const intervalRef = useRef<number | null>(null)
+
+    const API_BASE_URL = 'http://127.0.0.1:8000'
+
+    // Fetch APPL Data from ticker endpoint
+    const fetchAAPLData = async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/market/ticker/AAPL`)
+            if (!response.ok) {
+                throw new Error('Failed to fetch ticker data')
+            }
+            const data: TickerData = await response.json()
+            setTickerData(data)
+            setPrice(data.price)
+        } catch (error) {
+            console.error('Error fetching AAPL data:', error)
+        }
+    }
+
+    // polls data every 5 seconds
+    useEffect(() => {
+        fetchAAPLData()
+        
+        // updates every 5 seconds
+        intervalRef.current = window.setInterval(() => {
+            fetchAAPLData()
+        }, 5000)
+        
+        // Cleanup 
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current)
+            }
+        }
+    }, [])
 
     const trendingStocks = [
         { symbol: 'AAPL', name: 'Apple Inc.', price: 178.45, change: '+2.34%' },
@@ -113,13 +161,29 @@ function Trade() {
 
 
                             <div className="stock-price">
-                                <strong>$43.08</strong>
-                                <p className="positive">+1.89 (+4.59%) Past Month</p>
+                                <strong>
+                                    {tickerData ? `$${tickerData.price.toFixed(2)}` : 'Loading...'}
+                                </strong>
+                                {tickerData && (
+                                    <p className={tickerData.changePct >= 0 ? 'positive' : 'negative'}>
+                                        {tickerData.changePct >= 0 ? '+' : ''}{tickerData.changePct.toFixed(2)}%
+                                    </p>
+                                )}
                             </div>
 
                             <div className="stock-price">
-                                <strong>$43.21</strong>
-                                <p className="neutral">+0.13 (+0.30%)</p>
+                                <strong>
+                                    {tickerData ? `$${tickerData.prevClose.toFixed(2)}` : 'Loading...'}
+                                </strong>
+                                {tickerData && (() => {
+                                    const change = tickerData.price - tickerData.prevClose
+                                    const changePercent = (change / tickerData.prevClose) * 100
+                                    return (
+                                        <p className={changePercent >= 0 ? 'positive' : 'negative'}>
+                                            {change >= 0 ? '+' : ''}{change.toFixed(2)} ({changePercent >= 0 ? '+' : ''}{changePercent.toFixed(2)}%)
+                                        </p>
+                                    )
+                                })()}
                             </div>
 
                             <button className="bell-btn" title="Notifications">

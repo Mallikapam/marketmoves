@@ -22,7 +22,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/trade" element={<Trade />} />
+        <Route path="/trade-page" element={<Trade />} />
       </Routes>
     </Router>
   );
