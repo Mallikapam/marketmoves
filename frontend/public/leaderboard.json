@@ -4,28 +4,28 @@
       "name": "Alice Johnson",
       "university": "Virginia Tech",
       "number_of_trades": 10,
-      "points": 3000,
+      "points": 100,
       "return_percentage": 100
     },
     {
       "name": "Bob Smith",
       "university": "Virginia Tech",
       "number_of_trades": 20,
-      "points": 3000,
+      "points": 200,
       "return_percentage": 200
     },
     {
       "name": "Charlie Brown",
       "university": "Virginia Tech",
       "number_of_trades": 34,
-      "points": 2000,
+      "points": 3000,
       "return_percentage": 300
     },
     {
       "name": "Chris Williams",
       "university": "Virginia Tech",
       "number_of_trades": 44,
-      "points": 1000,
+      "points": 1050,
       "return_percentage": 400
     },
     {
