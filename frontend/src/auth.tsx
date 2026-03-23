@@ -5,13 +5,14 @@ import googleIcon from "./assets/google_logo.png";
 import appleIcon from "./assets/apple_icon.svg";
 import NavBar from "./navBar";
 import "./auth.css";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [visibility, setVisibility] = useState(false);
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
 
   const handleEChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -25,13 +26,15 @@ export default function AuthPage() {
     setVisibility(!visibility);
   };
 
-  const validFields =
-    email.includes("@") && password.length >= 8;
-  
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      await handleSignIn();
-    };
+  const navigate = useNavigate();
+
+  const validFields = email.includes("@") && password.length >= 8;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleSignIn();
+    navigate("/portfolio");
+  };
 
   const handleSignIn = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -40,41 +43,35 @@ export default function AuthPage() {
     });
 
     if (error || data === null) {
-      console.log('Signin error: ', error)
-      return
-    }
-    else {
-      console.log('Successful sign in:', data)
+      console.log("Signin error: ", error);
+      return;
+    } else {
+      console.log("Successful sign in:", data);
     }
 
-    if (data.session === null)
-    {
-      console.log("Session not returned")
-      alert("idk alert the user of something")
-      return
+    if (data.session === null) {
+      console.log("Session not returned");
+      alert("idk alert the user of something");
+      return;
     }
 
     const token = data?.session?.access_token;
 
-    if (token === null)
-    {
-      console.log("missing token")
-      return
+    if (token === null) {
+      console.log("missing token");
+      return;
     }
 
-    const res = await fetch('http://127.0.0.1:8000/protected', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // Need to set up data access of user from frontend to backend
+    // const res = await fetch("http://127.0.0.1:8000/protected", {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
 
-    const json = await res.json()
-    
-    setUser(json)
-  }
-
-
-
+    // const json = await res.json();
+    // setUser(json);
+  };
 
   return (
     <div className="signInDiv">
@@ -133,5 +130,5 @@ export default function AuthPage() {
         </form>
       </div>
     </div>
-  )
+  );
 }
