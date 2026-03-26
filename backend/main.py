@@ -3,12 +3,17 @@ import auth_routes, routes, trade_routes
 import market_routes, user_routes
 from models import User
 from fastapi.security import HTTPBearer
-from db import init_db
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv 
+import os 
 
-from firebase_auth import verify_token
+load_dotenv() 
 
-init_db()
+# from db import init_db
+
+# init_db()
 app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origins=[os.getenv("FRONTEND_URL")], allow_methods=["*"], allow_headers=["*"])
 security = HTTPBearer()
 
 # router is a mini-FastAPI app that holds its own endpoints

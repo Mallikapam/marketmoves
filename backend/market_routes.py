@@ -96,4 +96,4 @@ async def helper_ticker(symbol, client):
     
 
 def get_headers():
-    return {"accept": "application/json", "APCA_API_KEY_ID": os.getenv("APCA_API_KEY_ID"), "APCA_API_SECRET_KEY": os.getenv("APCA_API_SECRET_KEY"), "feed": "iex"}
+    return {"accept": "application/json", "APCA-API-KEY-ID": os.getenv("APCA_API_KEY_ID"), "APCA-API-SECRET-KEY": os.getenv("APCA_API_SECRET_KEY"), "feed": "iex"}

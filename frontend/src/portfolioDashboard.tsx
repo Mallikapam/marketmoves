@@ -9,6 +9,8 @@ function App() {
       <NavBar />
       <div className="wrapper">
         <div className="leftSide">
+          {/* Portfolio Value Section */}
+          {/* Has the total amount of money & ETF's*/}
           <div className="portfolio-value">Portfolio Value</div>
           <div className="total-money">$12,345.67</div>
 
