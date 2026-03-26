@@ -126,17 +126,15 @@ function App() {
             <div className="leaderboard-header">Live Leaderboard</div>
             <div className="ranking-button">
               <button
-                className={`button ${
-                  activeTab === "individual" ? "active" : "inactive"
-                }`}
+                className={`button ${activeTab === "individual" ? "active" : "inactive"
+                  }`}
                 onClick={() => setActiveTab("individual")}
               >
                 Individual Rankings
               </button>
               <button
-                className={`button ${
-                  activeTab === "university" ? "active" : "inactive"
-                }`}
+                className={`button ${activeTab === "university" ? "active" : "inactive"
+                  }`}
                 onClick={() => setActiveTab("university")}
               >
                 University Rankings

@@ -5,38 +5,124 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+p {
+  color: black;
+  text-align: center;
+  font-size: 0.8rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+span {
+  color: blue;
+  cursor: pointer;
+}
+
+span:hover {
+  text-decoration: underline;
+}
+
+/* General header styling */
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: black;
+  padding: 0.75rem 2rem;
+  font-family: 'Inter', sans-serif;
+  height: 4rem;
+  width: 95%;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  margin: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 99%;
+  height: 0.5px;
+  background-color: lightgray;
+}
+
+
+.header img {
+  height: 30px;
+  margin-right: 5px;
+}
+
+.header h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+.nav,
+.profile {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+.nav {
+  flex-grow: 1;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+
+.profile {
+  gap: 2rem;
+}
+
+
+.nav li,
+.profile li {
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  font-weight: 400px;
+  height: 1.5rem;
+  align-content: center;
+  text-align: center;
+  width: 75px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+a {
+  color: black;
+}
+
+a:hover {
+  color: black;
+}
+
+
+.nav li:hover,
+.profile li:hover {
+  background-color: lavender;
+}
+
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  to {
-    transform: rotate(360deg);
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 0.5rem;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .profile {
+    margin-top: 0.5rem;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

@@ -1,39 +1,49 @@
 {
   "leaderboard": [
     {
-      "name": "Alice Johnson",
-      "university": "Virginia Tech",
-      "number_of_trades": 10,
-      "points": 100,
-      "return_percentage": 100
+      "name": "Alex Rivera",
+      "university": "Stanford University",
+      "number_of_trades": 142,
+      "weekly_return": 1.25,
+      "monthly_return": 5.80,
+      "yearly_return": 24.15,
+      "alltime_return": 82.40
     },
     {
-      "name": "Bob Smith",
-      "university": "Virginia Tech",
-      "number_of_trades": 20,
-      "points": 200,
-      "return_percentage": 200
+      "name": "Jordan Chen",
+      "university": "MIT",
+      "number_of_trades": 89,
+      "weekly_return": -0.45,
+      "monthly_return": 2.10,
+      "yearly_return": 18.90,
+      "alltime_return": 45.60
     },
     {
-      "name": "Charlie Brown",
-      "university": "Virginia Tech",
-      "number_of_trades": 34,
-      "points": 3000,
-      "return_percentage": 300
+      "name": "Sarah Miller",
+      "university": "University of Oxford",
+      "number_of_trades": 215,
+      "weekly_return": 3.10,
+      "monthly_return": 12.45,
+      "yearly_return": 32.70,
+      "alltime_return": 115.20
     },
     {
-      "name": "Chris Williams",
-      "university": "Virginia Tech",
-      "number_of_trades": 44,
-      "points": 1050,
-      "return_percentage": 400
+      "name": "Liam O'Connor",
+      "university": "Dublin City University",
+      "number_of_trades": 56,
+      "weekly_return": 0.85,
+      "monthly_return": -1.20,
+      "yearly_return": 12.30,
+      "alltime_return": 28.50
     },
     {
-      "name": "Paul Shelby",
-      "university": "Virginia Tech",
-      "number_of_trades": 54,
-      "points": 10,
-      "return_percentage": 500
+      "name": "Yuki Tanaka",
+      "university": "University of Tokyo",
+      "number_of_trades": 312,
+      "weekly_return": 2.15,
+      "monthly_return": 8.90,
+      "yearly_return": 41.20,
+      "alltime_return": 156.75
     }
   ]
 }

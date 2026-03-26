@@ -50,14 +50,18 @@
 }
 
 .nav-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .nav-left img {
-  height: 40px;
-  width: auto;
+    height: 40px;
+    width: auto;
+}
+
+.nav-left h3 {
+    margin: 0;
 }
 
 .nav-left h3 {
