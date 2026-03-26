@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import TestSupabase from './TestSupabase'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import TestSupabase from "./TestSupabase";
+import "./App.css";
 
 // for routing
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -11,8 +11,6 @@ import Leaderboard from "./leaderboard";
 import Portfolio from "./portfolioDashboard";
 import SignUp from "./signUp";
 import Trade from "./trade";
-
-
 
 function App() {
   return (
@@ -27,5 +25,5 @@ function App() {
     </Router>
   );
 }
-  
+
 export default App;

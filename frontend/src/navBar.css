@@ -1,113 +1,112 @@
 /* General header styling */
 .header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    color: black;
-    padding: 0.75rem 2rem;
-    font-family: 'Inter', sans-serif;
-    height: 4rem;
-    width: 95%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: black;
+  padding: 0.75rem 2rem;
+  font-family: "Inter", sans-serif;
+  height: 4rem;
+  width: 95%;
 }
 
 .header::after {
-    content: '';
-    position: absolute;
-    margin: auto;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 99%;
-    height: 0.5px;
-    background-color: lightgray;
+  content: "";
+  position: absolute;
+  margin: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 99%;
+  height: 0.5px;
+  background-color: lightgray;
 }
 
-
 .header img {
-    height: 30px;
-    margin-right: 5px;
+  height: 30px;
+  margin-right: 5px;
 }
 
 .header h3 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
 }
-
 
 .nav,
 .profile {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-
 .nav {
-    flex-grow: 1;
-    justify-content: center;
-    gap: 1.5rem;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 .nav-left {
-    display: flex;        
-    align-items: center;  
-    gap: 10px;             
-  }
-  
-.nav-left img {
-    height: 40px;          
-    width: auto;
-  }
-  
-.nav-left h3 {
-    margin: 0;             
-  }
-
-
-.profile {
-    gap: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.nav-left img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-left h3 {
+  margin: 0;
+}
+
+.profile {
+  gap: 2rem;
+}
 
 .nav li,
 .profile li {
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: color 0.2s ease, transform 0.2s ease;
-    font-weight: 400px;
-    height: 1.5rem;
-    align-content: center;
-    text-align: center;
-    padding: 0 0.5rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+  font-weight: 400px;
+  height: 1.5rem;
+  align-content: center;
+  text-align: center;
+  padding: 0 0.5rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
 }
-
 
 .nav li:hover,
 .profile li:hover {
-    background-color: lavender;
+  background-color: lavender;
+}
+.profile {
+  /* Aiden - Need to adjust the color / styling */
+  color: #f74f4f;
 }
 
-
 @media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .nav {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 1rem;
-        margin-top: 0.5rem;
-    }
+  .nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
 
-    .profile {
-        margin-top: 0.5rem;
-    }
+  .profile {
+    margin-top: 0.5rem;
+  }
 }
