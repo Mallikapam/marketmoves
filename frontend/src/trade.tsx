@@ -62,7 +62,12 @@ function Trade() {
     }, [])
 
     const trendingStocks = [
-        { symbol: 'AAPL', name: 'Apple Inc.', price: 178.45, change: '+2.34%' },
+        { 
+            symbol: 'AAPL', 
+            name: 'Apple Inc.', 
+            price: tickerData?.price || 0, 
+            change: tickerData ? `${tickerData.changePct >= 0 ? '+' : ''}${tickerData.changePct.toFixed(2)}%` : 'Loading...' 
+        },
         { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 141.20, change: '+1.85%' },
         { symbol: 'MSFT', name: 'Microsoft Corp.', price: 378.91, change: '-0.45%' },
         { symbol: 'TSLA', name: 'Tesla Inc.', price: 242.84, change: '+3.21%' },
@@ -94,15 +99,20 @@ function Trade() {
                                 <div
                                     key={s.symbol}
                                     className={`stock-card ${selectedStock === s.symbol ? 'active' : ''}`}
-                                    onClick={() => { setSelectedStock(s.symbol); setPrice(s.price); }}
+                                    onClick={() => { 
+                                        setSelectedStock(s.symbol)
+                                        if (s.price > 0) {
+                                            setPrice(s.price)
+                                        }
+                                    }}
                                 >
                                     <div>
                                         <strong>{s.symbol}</strong>
                                         <p>{s.name}</p>
                                     </div>
                                     <div className="stock-info">
-                                        <span>${s.price}</span>
-                                        <small style={{ color: s.change.includes('-') ? '#ef4444' : '#10b981' }}>
+                                        <span>{s.price > 0 ? `$${s.price.toFixed(2)}` : 'Loading...'}</span>
+                                        <small style={{ color: typeof s.change === 'string' && s.change.includes('-') ? '#ef4444' : '#10b981' }}>
                                             {s.change}
                                         </small>
                                     </div>

@@ -14,7 +14,7 @@ load_dotenv()
 # init_db()
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=[os.getenv("FRONTEND_URL")], allow_methods=["*"], allow_headers=["*"])
-security = HTTPBearer()
+security = HTTPBearer() 
 
 # router is a mini-FastAPI app that holds its own endpoints
 # Without routers, all endpoints go into main.py which is messy
