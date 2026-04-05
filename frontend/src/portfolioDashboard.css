@@ -301,6 +301,32 @@
   color: #6b7280; /* subtle gray text */
 }
 
+.stock-topic-change.positive {
+  color: #059669 !important;
+}
+
+.stock-topic-change.negative {
+  color: #dc2626 !important;
+}
+
+.portfolio-stocks-subtitle {
+  margin: 0.35rem 0 0;
+  margin-right: 2rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.portfolio-most-active-status {
+  margin-top: 1rem;
+  margin-right: 2rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.portfolio-most-active-error {
+  color: #dc2626;
+}
+
 /* ----------------- RIGHT SIDE ----------------- */
 /* Your Personal Stats */
 

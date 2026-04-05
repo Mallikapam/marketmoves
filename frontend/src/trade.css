@@ -230,6 +230,19 @@ html, body {
   background-color: #ffffff; /* ensures background stays white */
 }
 
+/* Trade route: allow vertical page scroll (same idea as portfolio) */
+html:has(.trade-page),
+body:has(.trade-page) {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+body:has(.trade-page) #root {
+  height: auto;
+  min-height: 100%;
+}
+
 /* Make wrapper fill viewport */
 .trade-page {
   display: flex;
@@ -250,4 +263,8 @@ html, body {
   padding: 70px 20px 0;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.trade-page .shell {
+  overflow: visible;
 }

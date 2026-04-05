@@ -13,7 +13,27 @@ load_dotenv()
 
 # init_db()
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=[os.getenv("FRONTEND_URL")], allow_methods=["*"], allow_headers=["*"])
+
+
+def _cors_origins() -> list[str]:
+    origins = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+    env = os.getenv("FRONTEND_URL")
+    if env:
+        env = env.strip().strip('"').strip("'")
+        if env and env not in origins:
+            origins.append(env)
+    return origins
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_cors_origins(),
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 security = HTTPBearer() 
 
 # router is a mini-FastAPI app that holds its own endpoints

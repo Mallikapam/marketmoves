@@ -1,9 +1,76 @@
 import "./portfolioDashboard.css";
 import NavBar from "./navBar";
-import { useState } from "react";
+import { PortfolioStockCard } from "./components/PortfolioStockCard";
+import { useEffect, useState } from "react";
+
+/** Dev: same-origin /api → Vite proxies to :8000. Prod: set VITE_API_BASE_URL. */
+function portfolioApiUrl(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  const fromEnv = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
+  if (fromEnv) return `${fromEnv}${p}`;
+  if (import.meta.env.DEV) return `/api${p}`;
+  return `http://127.0.0.1:8000${p}`;
+}
+
+type MostActiveRow = {
+  symbol: string;
+  name: string;
+  price: number;
+  change: string;
+};
 
 function App() {
   const [activeTab, setActiveTab] = useState("individual");
+  const [mostActive, setMostActive] = useState<MostActiveRow[]>([]);
+  const [mostActiveLoading, setMostActiveLoading] = useState(true);
+  const [mostActiveError, setMostActiveError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setMostActiveLoading(true);
+      setMostActiveError(null);
+      try {
+        const res = await fetch(
+          portfolioApiUrl("/market/most-active-stocks?n=10")
+        );
+        if (!res.ok) {
+          throw new Error((await res.text()) || res.statusText);
+        }
+        const data: unknown = await res.json();
+        if (!Array.isArray(data)) throw new Error("Unexpected response");
+        const rows: MostActiveRow[] = data.map((item) => {
+          const row = item as Record<string, unknown>;
+          return {
+            symbol: String(row.symbol ?? ""),
+            name: String(row.name ?? row.symbol ?? ""),
+            price: Number(row.price ?? 0),
+            change: String(row.change ?? "—"),
+          };
+        });
+        if (!cancelled) setMostActive(rows.filter((r) => r.symbol));
+      } catch (e) {
+        console.error("Most active stocks:", e);
+        if (!cancelled) {
+          setMostActive([]);
+          setMostActiveError(
+            e instanceof TypeError && e.message === "Failed to fetch"
+              ? "Could not reach the API. Is the backend running?"
+              : e instanceof Error
+                ? e.message
+                : "Could not load stocks"
+          );
+        }
+      } finally {
+        if (!cancelled) setMostActiveLoading(false);
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="container">
       <NavBar />
@@ -62,47 +129,31 @@ function App() {
             </div>
           </div>
 
-          {/*Stocks*/}
           <div className="total-money">Stocks</div>
-          {/*change the classname for this? ^^*/}
-          <div className="stock-long">
-            {/*Do the css for this section*/}
-            <div className="stock-topic">
-              {/* I don't have a class def for stock-topic, yet no other classname works? */}
-              <h2>NFLX</h2>
-              <p>Netflix, Inc</p>
-            </div>
-            <div className="stock-topic">
-              <h2>$88.91</h2>
-              <p>+ 1.29%</p>
-            </div>
-          </div>
-
-          <div className="stock-long">
-            {/*Do the css for this section*/}
-            <div className="stock-topic">
-              {/* I don't have a class def for stock-topic, yet no other classname works? */}
-              <h2>AAPL</h2>
-              <p>Aaple, Inc</p>
-            </div>
-            <div className="stock-topic">
-              <h2>$188.91</h2>
-              <p>+ 2.29%</p>
-            </div>
-          </div>
-
-          <div className="stock-long">
-            {/*Do the css for this section*/}
-            <div className="stock-topic">
-              {/* I don't have a class def for stock-topic, yet no other classname works? */}
-              <h2>FB</h2>
-              <p>Facebook, Inc</p>
-            </div>
-            <div className="stock-topic">
-              <h2>$288.91</h2>
-              <p>+ 5.29%</p>
-            </div>
-          </div>
+          <p className="portfolio-stocks-subtitle">Top 10 most active</p>
+          {mostActiveLoading ? (
+            <p className="portfolio-most-active-status">
+              Loading most active stocks…
+            </p>
+          ) : mostActiveError ? (
+            <p className="portfolio-most-active-status portfolio-most-active-error">
+              {mostActiveError}
+            </p>
+          ) : mostActive.length === 0 ? (
+            <p className="portfolio-most-active-status">
+              No most active data available.
+            </p>
+          ) : (
+            mostActive.map((r) => (
+              <PortfolioStockCard
+                key={r.symbol}
+                symbol={r.symbol}
+                name={r.name}
+                price={r.price}
+                changeLabel={r.change}
+              />
+            ))
+          )}
         </div>
         <div className="rightSide">
           <div className="personal-stats">
