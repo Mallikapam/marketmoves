@@ -1,5 +1,5 @@
 from collections import defaultdict
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Query
 import httpx
 import json 
 from dotenv import load_dotenv 
@@ -97,3 +97,41 @@ async def helper_ticker(symbol, client):
 
 def get_headers():
     return {"accept": "application/json", "APCA-API-KEY-ID": os.getenv("APCA_API_KEY_ID"), "APCA-API-SECRET-KEY": os.getenv("APCA_API_SECRET_KEY"), "feed": "iex"}
+
+@router.get("/most-active-stocks")
+async def most_active_stocks(n: int = Query(10, ge=1, le=100)):
+    """
+    Top-N most active symbols (Alpaca screener), enriched with snapshot price / % change.
+    Returns [{ "symbol", "name", "price", "change" }, ...].
+    """
+    url = f"https://data.alpaca.markets/v1beta1/screener/stocks/most-actives?by=volume&top={n}"
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url, headers=get_headers())
+        if response.status_code != 200:
+            try:
+                body = response.json()
+                msg = body.get("message", str(body))
+            except Exception:
+                msg = response.text or getattr(response, "reason_phrase", "") or "Request failed"
+            raise HTTPException(status_code=response.status_code, detail=msg)
+
+        payload = response.json()
+        symbols = [item["symbol"] for item in payload.get("most_actives", [])]
+        if not symbols:
+            return []
+
+        snapshots = await asyncio.gather(*[helper_ticker(sym, client) for sym in symbols])
+        rows = []
+        for sym, snap in zip(symbols, snapshots):
+            if isinstance(snap, str):
+                continue
+            cp = snap["changePct"]
+            rows.append(
+                {
+                    "symbol": sym,
+                    "name": sym,
+                    "price": snap["price"],
+                    "change": f"{'+' if cp >= 0 else ''}{cp:.2f}%",
+                }
+            )
+        return rows
